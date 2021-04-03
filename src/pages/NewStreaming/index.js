@@ -21,7 +21,7 @@ const NewStreaming = () => {
   const handleSubmitTopic = (e) => {
     e.preventDefault();
 
-    console.log({ name, rule });
+    console.log({ topic: name, rule });
   };
 
   return (
