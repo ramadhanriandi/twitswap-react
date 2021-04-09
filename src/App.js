@@ -19,7 +19,9 @@ const App = () => {
               <Route
                 path="/streaming"
                 exact
-                component={LazyLoading(() => import("~/pages/PastStreaming"))}
+                component={LazyLoading(() =>
+                  import("~/pages/VisualizationList")
+                )}
               />
               <Route
                 path="/past"
@@ -29,7 +31,9 @@ const App = () => {
               <Route
                 path="/past/:id"
                 exact
-                component={LazyLoading(() => import("~/pages/PastStreaming"))}
+                component={LazyLoading(() =>
+                  import("~/pages/VisualizationList")
+                )}
               />
               <Route
                 path="/"

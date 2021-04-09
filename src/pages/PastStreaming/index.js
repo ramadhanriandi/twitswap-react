@@ -17,6 +17,7 @@ const PastStreaming = () => {
             endTime={data.end_time}
             duration={data.duration}
             rule={data.rule}
+            isRedirected
           />
         </div>
       ))}

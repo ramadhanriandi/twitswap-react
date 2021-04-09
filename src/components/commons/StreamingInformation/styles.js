@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { COLORS } from "~/constants/colors";
 
 export const StyledStreamingInformation = styled.div`
+  ${(props) => (props.fullHeight ? "height: 100%;" : "")}
+
   .streaming-information {
     &__input {
       align-items: center;

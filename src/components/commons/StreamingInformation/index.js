@@ -8,7 +8,16 @@ import Button from "~/components/commons/Button";
 import { StyledStreamingInformation } from "./styles";
 
 const StreamingInformation = (props) => {
-  const { id, topic, startTime, endTime, duration, rule } = props;
+  const {
+    id,
+    topic,
+    startTime,
+    endTime,
+    duration,
+    rule,
+    fullHeight,
+    isRedirected,
+  } = props;
 
   const history = useHistory();
 
@@ -18,8 +27,8 @@ const StreamingInformation = (props) => {
   };
 
   return (
-    <StyledStreamingInformation>
-      <Box>
+    <StyledStreamingInformation fullHeight={fullHeight}>
+      <Box className="h-full">
         <div className="flex justify-between mb-6">
           <div>
             <div className="streaming-information__title">{topic}</div>
@@ -28,9 +37,12 @@ const StreamingInformation = (props) => {
               <span>Duration:</span> {duration}
             </div>
           </div>
-          <Button color="primary" onClick={handleRedirect(id)}>
-            Detail
-          </Button>
+
+          {isRedirected ? (
+            <Button color="primary" onClick={handleRedirect(id)}>
+              Detail
+            </Button>
+          ) : null}
         </div>
 
         <div className="streaming-information__input">
@@ -54,6 +66,13 @@ StreamingInformation.propTypes = {
   endTime: PropTypes.string.isRequired,
   duration: PropTypes.string.isRequired,
   rule: PropTypes.string.isRequired,
+  fullHeight: PropTypes.bool,
+  isRedirected: PropTypes.bool,
+};
+
+StreamingInformation.defaultProps = {
+  fullHeight: false,
+  isRedirected: false,
 };
 
 export default StreamingInformation;
