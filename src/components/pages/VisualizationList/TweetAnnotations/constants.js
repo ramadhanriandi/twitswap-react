@@ -1,35 +1,33 @@
-export const DUMMY_TWEET_DOMAINS = [
-  {
-    name: "tweet_domains",
-    children: [
-      {
-        name: "Brand",
-        tweets: 300,
-      },
-      {
-        name: "Brand Category",
-        tweets: 234,
-      },
-      {
-        name: "Product",
-        tweets: 124,
-      },
-      {
-        name: "Technology",
-        tweets: 104,
-      },
-      {
-        name: "Brand Vertical",
-        tweets: 25,
-      },
-      {
-        name: "Community",
-        tweets: 10,
-      },
-      {
-        name: "Product Version",
-        tweets: 5,
-      },
-    ],
-  },
-];
+export const DUMMY_TWEET_ANNOTATIONS = {
+  name: "root",
+  children: [
+    {
+      name: "Brand",
+      value: 300,
+    },
+    {
+      name: "Brand Category",
+      value: 234,
+    },
+    {
+      name: "Product",
+      value: 124,
+    },
+    {
+      name: "Technology",
+      value: 104,
+    },
+    {
+      name: "Brand Vertical",
+      value: 25,
+    },
+    {
+      name: "Community",
+      value: 10,
+    },
+    {
+      name: "Product Version",
+      value: 5,
+    },
+  ],
+};
