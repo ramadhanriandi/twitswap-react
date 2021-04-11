@@ -5,12 +5,11 @@ import { ResponsiveWaffle } from "@nivo/waffle";
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_LANGUAGE_DATA } from "./constants";
-import { StyledLanguages } from "./styles";
 import { getTotalData } from "./utils";
 
 const Languages = () => {
   return (
-    <StyledLanguages>
+    <div>
       <VisualizationTemplate title="Languages">
         <ResponsiveWaffle
           data={DUMMY_LANGUAGE_DATA}
@@ -25,7 +24,7 @@ const Languages = () => {
           fillDirection="top"
         />
       </VisualizationTemplate>
-    </StyledLanguages>
+    </div>
   );
 };
 

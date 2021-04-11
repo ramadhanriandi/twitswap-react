@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
     "babel-plugin-root-import": "^6.6.0",
+    "d3-geo-projection": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-datepicker": "^3.7.0",
@@ -21,7 +22,9 @@
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-simple-maps": "^2.3.0",
     "react-tagcloud": "^2.1.0",
+    "react-tweet-embed": "^1.2.2",
     "recharts": "^2.0.9",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.0.1"

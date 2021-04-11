@@ -14,20 +14,19 @@ import { COLORS } from "~/constants/colors";
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_TWEETS_PER_TIME } from "./constants";
-import { StyledTweetsPerTime } from "./styles";
 
 const TweetsPerTime = () => {
   return (
-    <StyledTweetsPerTime>
+    <div>
       <VisualizationTemplate title="Tweets per Time">
         <ResponsiveContainer height={308} width="100%">
           <LineChart
             data={DUMMY_TWEETS_PER_TIME}
             margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -43,7 +42,7 @@ const TweetsPerTime = () => {
           </LineChart>
         </ResponsiveContainer>
       </VisualizationTemplate>
-    </StyledTweetsPerTime>
+    </div>
   );
 };
 

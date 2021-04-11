@@ -1,11 +1,15 @@
 import React from "react";
 
 import StreamingInformation from "~/components/commons/StreamingInformation";
+import EngagementRate from "~/components/pages/VisualizationList/EngagementRate";
 import Languages from "~/components/pages/VisualizationList/Languages";
+import PopularTweets from "~/components/pages/VisualizationList/PopularTweets";
 import Sentiment from "~/components/pages/VisualizationList/Sentiment";
+import TopHashtags from "~/components/pages/VisualizationList/TopHashtags";
 import TotalTweets from "~/components/pages/VisualizationList/TotalTweets";
 import TweetAnnotations from "~/components/pages/VisualizationList/TweetAnnotations";
 import TweetDomains from "~/components/pages/VisualizationList/TweetDomains";
+import TweetGeolocations from "~/components/pages/VisualizationList/TweetGeolocations";
 import TweetsPerTime from "~/components/pages/VisualizationList/TweetsPerTime";
 import WordCloud from "~/components/pages/VisualizationList/WordCloud";
 
@@ -45,6 +49,16 @@ const VisualizationList = () => {
         </div>
         <Sentiment />
         <Languages />
+      </div>
+
+      <div className="grid grid-cols-2 gap-x-5 mb-5">
+        <TweetGeolocations />
+        <TopHashtags />
+      </div>
+
+      <div className="grid grid-cols-2 gap-x-5">
+        <EngagementRate />
+        <PopularTweets />
       </div>
     </VisualizationListWrapper>
   );

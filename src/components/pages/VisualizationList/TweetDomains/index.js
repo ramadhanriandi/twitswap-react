@@ -6,11 +6,10 @@ import { COLORS } from "~/constants/colors";
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_TWEET_DOMAINS } from "./constants";
-import { StyledTweetDomains } from "./styles";
 
 const TweetDomains = () => {
   return (
-    <StyledTweetDomains>
+    <div>
       <VisualizationTemplate title="Tweet Domains">
         <ResponsiveContainer height={308} width="100%">
           <Treemap
@@ -24,7 +23,7 @@ const TweetDomains = () => {
           </Treemap>
         </ResponsiveContainer>
       </VisualizationTemplate>
-    </StyledTweetDomains>
+    </div>
   );
 };
 

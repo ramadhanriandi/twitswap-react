@@ -11,11 +11,10 @@ import {
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_SENTIMENT_DATA, SENTIMENT_COLORS } from "./constants";
-import { StyledSentiment } from "./styles";
 
 const Sentiment = () => {
   return (
-    <StyledSentiment>
+    <div>
       <VisualizationTemplate title="Sentiment">
         <ResponsiveContainer height={308} width="100%">
           <PieChart>
@@ -37,7 +36,7 @@ const Sentiment = () => {
           </PieChart>
         </ResponsiveContainer>
       </VisualizationTemplate>
-    </StyledSentiment>
+    </div>
   );
 };
 

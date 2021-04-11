@@ -7,11 +7,10 @@ import { COLORS } from "~/constants/colors";
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_TWEET_ANNOTATIONS } from "./constants";
-import { StyledTweetAnnotations } from "./styles";
 
 const TweetAnnotations = () => {
   return (
-    <StyledTweetAnnotations>
+    <div>
       <VisualizationTemplate title="Tweet Annotations">
         <ResponsiveBubbleHtml
           root={DUMMY_TWEET_ANNOTATIONS}
@@ -31,9 +30,10 @@ const TweetAnnotations = () => {
               {id}: {value}
             </p>
           )}
+          isZoomable={false}
         />
       </VisualizationTemplate>
-    </StyledTweetAnnotations>
+    </div>
   );
 };
 
