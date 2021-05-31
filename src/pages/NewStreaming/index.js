@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Box from "~/components/commons/Box";
 import Button from "~/components/commons/Button";
+import { startStreaming } from "~/slices/streaming";
 
 import { MAX_RULE_LENGTH } from "./constants";
 import { NewStreamingWrapper } from "./styles";
 
 const NewStreaming = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [rule, setRule] = useState("");
 
@@ -21,7 +25,7 @@ const NewStreaming = () => {
   const handleSubmitTopic = (e) => {
     e.preventDefault();
 
-    console.log({ topic: name, rule });
+    dispatch(startStreaming(name, rule));
   };
 
   return (
