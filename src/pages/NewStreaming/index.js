@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { CircularProgress } from "@material-ui/core";
 
 import Box from "~/components/commons/Box";
 import Button from "~/components/commons/Button";
-import { startStreaming } from "~/slices/streaming";
+import { startStreaming, streamingSelector } from "~/slices/streaming";
 
-import { MAX_RULE_LENGTH } from "./constants";
+import { MAX_RULE_LENGTH, TWITTER_RULE_LINK } from "./constants";
 import { NewStreamingWrapper } from "./styles";
 
 const NewStreaming = () => {
   const dispatch = useDispatch();
+
+  const { loading } = useSelector(streamingSelector);
 
   const [name, setName] = useState("");
   const [rule, setRule] = useState("");
@@ -47,24 +51,28 @@ const NewStreaming = () => {
           />
         </div>
         <div className="new-streaming__input__count">
-          {rule.length} / 512 characters
+          {rule.length} / {MAX_RULE_LENGTH} characters
         </div>
 
         <div className="new-streaming__note">
           Don’t know how to build a rule? Refer to this{" "}
-          <a
-            href="https://developer.twitter.com/en/docs/twitter-api/tweets/filtered-stream/integrate/build-a-rule"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={TWITTER_RULE_LINK} target="_blank" rel="noreferrer">
             documentation
           </a>
         </div>
 
         <div className="flex justify-end">
+          {loading && (
+            <CircularProgress className="mr-4 p-2" color="secondary" />
+          )}
           <Button
             color="primary"
-            disabled={!name || !rule || (rule && rule.length > MAX_RULE_LENGTH)}
+            disabled={
+              loading ||
+              !name ||
+              !rule ||
+              (rule && rule.length > MAX_RULE_LENGTH)
+            }
             onClick={handleSubmitTopic}
           >
             Start
