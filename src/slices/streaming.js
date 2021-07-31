@@ -6,11 +6,6 @@ const initialState = {
   loading: false,
   errorMsg: "",
   currentStreaming: {},
-
-  topic: "",
-  rule: "",
-  ruleId: "",
-  startDateTime: null,
 };
 
 const streamingSlice = createSlice({
@@ -30,10 +25,10 @@ const streamingSlice = createSlice({
       state.errorMsg = "";
     },
     stopStreamingSuccess: (state) => {
-      state.topic = "";
-      state.rule = "";
-      state.ruleId = "";
-      state.startDateTime = null;
+      state.currentStreaming = {
+        ...state.currentStreaming,
+        endTime: new Date(),
+      };
       state.loading = false;
       state.errorMsg = "";
     },
@@ -75,12 +70,12 @@ export const startStreaming = (topicName, topicRule) => {
   };
 };
 
-export const stopStreaming = () => {
+export const stopStreaming = (streamingId) => {
   return async (dispatch) => {
     dispatch(setLoading());
 
     try {
-      const data = await stopStreamingApi();
+      const data = await stopStreamingApi(streamingId);
 
       if (data.success) {
         dispatch(stopStreamingSuccess());

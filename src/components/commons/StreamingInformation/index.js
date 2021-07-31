@@ -4,20 +4,12 @@ import { useHistory } from "react-router-dom";
 
 import Box from "~/components/commons/Box";
 import Button from "~/components/commons/Button";
+import { formatDateTime } from "~/helpers/datetime";
 
 import { StyledStreamingInformation } from "./styles";
 
 const StreamingInformation = (props) => {
-  const {
-    id,
-    topic,
-    startTime,
-    endTime,
-    duration,
-    rule,
-    fullHeight,
-    isRedirected,
-  } = props;
+  const { streaming, fullHeight, isRedirected } = props;
 
   const history = useHistory();
 
@@ -31,15 +23,22 @@ const StreamingInformation = (props) => {
       <Box className="h-full">
         <div className="flex justify-between mb-6">
           <div>
-            <div className="streaming-information__title">{topic}</div>
+            <div className="streaming-information__title">{streaming.name}</div>
             <div className="streaming-information__time">
-              <span>Start:</span> {startTime} | <span>End:</span> {endTime} |{" "}
-              <span>Duration:</span> {duration}
+              <span>Start:</span> {formatDateTime(streaming.startTime)}
+              {streaming.endTime && (
+                <>
+                  {" "}
+                  | <span>End:</span> {streaming.endTime} |{" "}
+                  <span>Duration:</span>{" "}
+                  {streaming.endTime - streaming.startTime}
+                </>
+              )}
             </div>
           </div>
 
           {isRedirected ? (
-            <Button color="primary" onClick={handleRedirect(id)}>
+            <Button color="primary" onClick={handleRedirect(streaming.id)}>
               Detail
             </Button>
           ) : null}
@@ -51,7 +50,7 @@ const StreamingInformation = (props) => {
             className="streaming-information__input__rule"
             readOnly
             type="text"
-            value={rule}
+            value={streaming.rule}
           />
         </div>
       </Box>
@@ -60,12 +59,7 @@ const StreamingInformation = (props) => {
 };
 
 StreamingInformation.propTypes = {
-  id: PropTypes.string.isRequired,
-  topic: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired,
-  endTime: PropTypes.string.isRequired,
-  duration: PropTypes.string.isRequired,
-  rule: PropTypes.string.isRequired,
+  streaming: PropTypes.object.isRequired,
   fullHeight: PropTypes.bool,
   isRedirected: PropTypes.bool,
 };

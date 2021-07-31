@@ -9,8 +9,10 @@ export const startStreamingApi = async (name, rule) => {
   return data;
 };
 
-export const stopStreamingApi = async () => {
-  const { data } = await streamRequest.post("/streaming/stop");
+export const stopStreamingApi = async (id) => {
+  const { data } = await streamRequest.post("/streaming/stop", {
+    id,
+  });
 
   return data;
 };

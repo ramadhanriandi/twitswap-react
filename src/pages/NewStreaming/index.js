@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { CircularProgress } from "@material-ui/core";
 
@@ -12,6 +13,8 @@ import { NewStreamingWrapper } from "./styles";
 
 const NewStreaming = () => {
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const { loading } = useSelector(streamingSelector);
 
@@ -26,10 +29,11 @@ const NewStreaming = () => {
     setRule(e.target.value);
   };
 
-  const handleSubmitTopic = (e) => {
+  const handleSubmitTopic = async (e) => {
     e.preventDefault();
 
-    dispatch(startStreaming(name, rule));
+    await dispatch(startStreaming(name, rule));
+    history.push("/streaming");
   };
 
   return (

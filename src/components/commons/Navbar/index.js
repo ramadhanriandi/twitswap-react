@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory, useLocation } from "react-router-dom";
@@ -6,13 +7,18 @@ import { useHistory, useLocation } from "react-router-dom";
 import { AddCircleOutline, History } from "@material-ui/icons";
 
 import Button from "~/components/commons/Button";
+import { stopStreaming, streamingSelector } from "~/slices/streaming";
 
 import { StyledNavbar } from "./styles";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const location = useLocation();
+
+  const { currentStreaming } = useSelector(streamingSelector);
 
   const [activeMenu, setActiveMenu] = useState("");
   const [dateTime, setDateTime] = useState(new Date());
@@ -23,6 +29,8 @@ const Navbar = () => {
     setActiveMenu(locationPathname);
   }, [location.pathname]);
 
+  console.log(currentStreaming);
+
   const handleChangeDateTime = (dateTime) => {
     setDateTime(dateTime);
   };
@@ -32,8 +40,17 @@ const Navbar = () => {
     history.push(link);
   };
 
+  const handleStopStreaming = (e) => {
+    e.preventDefault();
+
+    if (currentStreaming.id) {
+      dispatch(stopStreaming(currentStreaming.id));
+    }
+  };
+
   const renderMenu = () => {
-    if (activeMenu === "streaming") return <Button>Stop</Button>;
+    if (activeMenu === "streaming")
+      return <Button onClick={handleStopStreaming}>Stop</Button>;
 
     const parsedPathname = location.pathname.slice(1).split("/");
 

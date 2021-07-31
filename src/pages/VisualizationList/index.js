@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import StreamingInformation from "~/components/commons/StreamingInformation";
 import EngagementRate from "~/components/pages/VisualizationList/EngagementRate";
@@ -12,24 +13,18 @@ import TweetDomains from "~/components/pages/VisualizationList/TweetDomains";
 import TweetGeolocations from "~/components/pages/VisualizationList/TweetGeolocations";
 import TweetsPerTime from "~/components/pages/VisualizationList/TweetsPerTime";
 import WordCloud from "~/components/pages/VisualizationList/WordCloud";
+import { streamingSelector } from "~/slices/streaming";
 
-import { DUMMY_METADATA } from "./constants";
 import { VisualizationListWrapper } from "./styles";
 
 const VisualizationList = () => {
+  const { currentStreaming } = useSelector(streamingSelector);
+
   return (
     <VisualizationListWrapper>
       <div className="grid grid-cols-3 gap-x-5 mb-5">
         <div className="col-span-2">
-          <StreamingInformation
-            id={DUMMY_METADATA.id}
-            topic={DUMMY_METADATA.topic}
-            startTime={DUMMY_METADATA.start_time}
-            endTime={DUMMY_METADATA.end_time}
-            duration={DUMMY_METADATA.duration}
-            rule={DUMMY_METADATA.rule}
-            fullHeight
-          />
+          <StreamingInformation streaming={currentStreaming} fullHeight />
         </div>
         <TotalTweets />
       </div>
