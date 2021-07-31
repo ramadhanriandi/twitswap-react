@@ -19,3 +19,20 @@ export const formatDateTime = (dateStr) => {
 
   return `${date} ${MONTHS[monthIdx]}, ${year} at ${hourStr}:${minuteStr} ${period}`;
 };
+
+export const getDuration = (startTimeStr, endTimeStr) => {
+  if (!startTimeStr || !endTimeStr) {
+    return null;
+  }
+
+  const startTime = new Date(startTimeStr);
+  const endTime = new Date(endTimeStr);
+
+  const diff = endTime - startTime;
+  const diffHours = Math.floor((diff % 86400000) / 3600000);
+  const diffMinutes = Math.round(((diff % 86400000) % 3600000) / 60000);
+
+  return `${diffHours} hour${diffHours > 1 ? "s" : ""} ${diffMinutes} minute${
+    diffMinutes > 1 ? "s" : ""
+  }`;
+};

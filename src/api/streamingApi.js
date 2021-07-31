@@ -16,3 +16,9 @@ export const stopStreamingApi = async (id) => {
 
   return data;
 };
+
+export const getLatestStreamingApi = async () => {
+  const { data } = await streamRequest.get("/streaming/latest");
+
+  return data;
+};

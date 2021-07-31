@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -6,7 +6,11 @@ import { CircularProgress } from "@material-ui/core";
 
 import Box from "~/components/commons/Box";
 import Button from "~/components/commons/Button";
-import { startStreaming, streamingSelector } from "~/slices/streaming";
+import {
+  startStreaming,
+  getLatestStreaming,
+  streamingSelector,
+} from "~/slices/streaming";
 
 import { MAX_RULE_LENGTH, TWITTER_RULE_LINK } from "./constants";
 import { NewStreamingWrapper } from "./styles";
@@ -16,10 +20,21 @@ const NewStreaming = () => {
 
   const history = useHistory();
 
-  const { loading } = useSelector(streamingSelector);
+  const { currentStreaming, loading } = useSelector(streamingSelector);
 
   const [name, setName] = useState("");
   const [rule, setRule] = useState("");
+
+  useEffect(() => {
+    dispatch(getLatestStreaming());
+  }, []);
+
+  useEffect(() => {
+    // if the streaming is running
+    if (currentStreaming.id && !currentStreaming.endTime) {
+      history.push("/streaming");
+    }
+  }, [currentStreaming]);
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -33,7 +48,6 @@ const NewStreaming = () => {
     e.preventDefault();
 
     await dispatch(startStreaming(name, rule));
-    history.push("/streaming");
   };
 
   return (

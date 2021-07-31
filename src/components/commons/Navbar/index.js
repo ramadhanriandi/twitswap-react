@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory, useLocation } from "react-router-dom";
 
+import { CircularProgress } from "@material-ui/core";
 import { AddCircleOutline, History } from "@material-ui/icons";
 
 import Button from "~/components/commons/Button";
@@ -18,7 +19,7 @@ const Navbar = () => {
 
   const location = useLocation();
 
-  const { currentStreaming } = useSelector(streamingSelector);
+  const { currentStreaming, loading } = useSelector(streamingSelector);
 
   const [activeMenu, setActiveMenu] = useState("");
   const [dateTime, setDateTime] = useState(new Date());
@@ -29,8 +30,6 @@ const Navbar = () => {
     setActiveMenu(locationPathname);
   }, [location.pathname]);
 
-  console.log(currentStreaming);
-
   const handleChangeDateTime = (dateTime) => {
     setDateTime(dateTime);
   };
@@ -40,17 +39,32 @@ const Navbar = () => {
     history.push(link);
   };
 
-  const handleStopStreaming = (e) => {
+  const handleStopStreaming = async (e) => {
     e.preventDefault();
 
-    if (currentStreaming.id) {
-      dispatch(stopStreaming(currentStreaming.id));
+    if (currentStreaming.id && !currentStreaming.endTime) {
+      await dispatch(stopStreaming(currentStreaming.id));
+      history.push("/past");
     }
   };
 
   const renderMenu = () => {
     if (activeMenu === "streaming")
-      return <Button onClick={handleStopStreaming}>Stop</Button>;
+      return (
+        <div className="flex">
+          <div className="text-white">
+            {loading && (
+              <CircularProgress className="mr-4 p-2" color="inherit" />
+            )}
+          </div>
+          <Button
+            disable={!!currentStreaming.endTime}
+            onClick={handleStopStreaming}
+          >
+            Stop
+          </Button>
+        </div>
+      );
 
     const parsedPathname = location.pathname.slice(1).split("/");
 

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
 import Box from "~/components/commons/Box";
 import Button from "~/components/commons/Button";
-import { formatDateTime } from "~/helpers/datetime";
+import { formatDateTime, getDuration } from "~/helpers/datetime";
 
 import { StyledStreamingInformation } from "./styles";
 
@@ -18,6 +18,15 @@ const StreamingInformation = (props) => {
     history.push(`/past/${id}`);
   };
 
+  const startTime = useMemo(() => formatDateTime(streaming.startTime), [
+    streaming,
+  ]);
+  const endTime = useMemo(() => formatDateTime(streaming.endTime), [streaming]);
+  const duration = useMemo(
+    () => getDuration(streaming.startTime, streaming.endTime),
+    [streaming]
+  );
+
   return (
     <StyledStreamingInformation fullHeight={fullHeight}>
       <Box className="h-full">
@@ -25,13 +34,12 @@ const StreamingInformation = (props) => {
           <div>
             <div className="streaming-information__title">{streaming.name}</div>
             <div className="streaming-information__time">
-              <span>Start:</span> {formatDateTime(streaming.startTime)}
+              <span>Start:</span> {startTime}
               {streaming.endTime && (
                 <>
                   {" "}
-                  | <span>End:</span> {streaming.endTime} |{" "}
-                  <span>Duration:</span>{" "}
-                  {streaming.endTime - streaming.startTime}
+                  | <span>End:</span> {endTime} | <span>Duration:</span>{" "}
+                  {duration}
                 </>
               )}
             </div>
@@ -69,4 +77,4 @@ StreamingInformation.defaultProps = {
   isRedirected: false,
 };
 
-export default StreamingInformation;
+export default memo(StreamingInformation);

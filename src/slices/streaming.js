@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { startStreamingApi, stopStreamingApi } from "~/api/streamingApi";
+import {
+  startStreamingApi,
+  stopStreamingApi,
+  getLatestStreamingApi,
+} from "~/api/streamingApi";
 
 const initialState = {
   loading: false,
@@ -32,6 +36,11 @@ const streamingSlice = createSlice({
       state.loading = false;
       state.errorMsg = "";
     },
+    getLatestStreamingSuccess: (state, { payload }) => {
+      state.currentStreaming = payload;
+      state.loading = false;
+      state.errorMsg = "";
+    },
   },
 });
 
@@ -40,6 +49,7 @@ export const {
   setError,
   startStreamingSuccess,
   stopStreamingSuccess,
+  getLatestStreamingSuccess,
 } = streamingSlice.actions;
 
 export const streamingSelector = (state) => state.streaming;
@@ -51,9 +61,9 @@ export const startStreaming = (topicName, topicRule) => {
     dispatch(setLoading());
 
     try {
-      const data = await startStreamingApi(topicName, topicRule);
+      const response = await startStreamingApi(topicName, topicRule);
 
-      const { id, name, rule_id, rule, start_time } = data;
+      const { id, name, rule_id, rule, start_time } = response.data;
 
       dispatch(
         startStreamingSuccess({
@@ -61,7 +71,7 @@ export const startStreaming = (topicName, topicRule) => {
           name,
           ruleId: rule_id,
           rule,
-          startTime: Date(start_time),
+          startTime: new Date(start_time),
         })
       );
     } catch (error) {
@@ -75,13 +85,38 @@ export const stopStreaming = (streamingId) => {
     dispatch(setLoading());
 
     try {
-      const data = await stopStreamingApi(streamingId);
+      const response = await stopStreamingApi(streamingId);
 
-      if (data.success) {
+      if (response.success) {
         dispatch(stopStreamingSuccess());
       }
     } catch (error) {
       dispatch(setError("Failed to stop streaming"));
+    }
+  };
+};
+
+export const getLatestStreaming = () => {
+  return async (dispatch) => {
+    dispatch(setLoading());
+
+    try {
+      const response = await getLatestStreamingApi();
+
+      const { id, name, start_time, end_time, rule_id, rule } = response.data;
+
+      dispatch(
+        getLatestStreamingSuccess({
+          id,
+          name,
+          ruleId: rule_id,
+          rule,
+          startTime: new Date(start_time),
+          endTime: end_time.Valid ? new Date(end_time.Time) : null,
+        })
+      );
+    } catch (error) {
+      dispatch(setError("Failed to get latest streaming"));
     }
   };
 };
