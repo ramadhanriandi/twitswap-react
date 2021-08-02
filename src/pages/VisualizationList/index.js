@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import StreamingInformation from "~/components/commons/StreamingInformation";
 import EngagementRate from "~/components/pages/VisualizationList/EngagementRate";
@@ -14,7 +14,11 @@ import TweetDomains from "~/components/pages/VisualizationList/TweetDomains";
 import TweetGeolocations from "~/components/pages/VisualizationList/TweetGeolocations";
 import TweetsPerTime from "~/components/pages/VisualizationList/TweetsPerTime";
 import WordCloud from "~/components/pages/VisualizationList/WordCloud";
-import { getLatestStreaming, streamingSelector } from "~/slices/streaming";
+import {
+  getLatestStreaming,
+  getStreamingById,
+  streamingSelector,
+} from "~/slices/streaming";
 
 import { VisualizationListWrapper } from "./styles";
 
@@ -23,19 +27,32 @@ const VisualizationList = () => {
 
   const history = useHistory();
 
+  const location = useLocation();
+
   const { currentStreaming } = useSelector(streamingSelector);
 
   useEffect(() => {
-    // if missing current streaming data
-    if (!currentStreaming.id) {
-      dispatch(getLatestStreaming());
+    const locationPathname = location.pathname.slice(1);
+
+    if (locationPathname === "streaming") {
+      // if missing current streaming data
+      if (!currentStreaming.id) {
+        dispatch(getLatestStreaming());
+      } else {
+        // if streaming has done
+        if (currentStreaming.endTime) {
+          history.push("/past");
+        }
+      }
     } else {
-      // if streaming has done
-      if (currentStreaming.endTime) {
-        history.push("/past");
+      const parsedPathname = locationPathname.split("/");
+      const streamingId = parseInt(parsedPathname[1]);
+
+      if (parsedPathname[0] === "past" && currentStreaming.id !== streamingId) {
+        dispatch(getStreamingById(streamingId));
       }
     }
-  }, [currentStreaming]);
+  }, [currentStreaming, location.pathname]);
 
   return (
     <VisualizationListWrapper>

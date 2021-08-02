@@ -28,3 +28,9 @@ export const getAllStreamingApi = async () => {
 
   return data;
 };
+
+export const getStreamingByIdApi = async (id) => {
+  const { data } = await streamRequest.get(`/streaming/${id}`);
+
+  return data;
+};

@@ -5,6 +5,7 @@ import {
   stopStreamingApi,
   getLatestStreamingApi,
   getAllStreamingApi,
+  getStreamingByIdApi,
 } from "~/api/streamingApi";
 
 const initialState = {
@@ -48,6 +49,11 @@ const streamingSlice = createSlice({
       state.loading = false;
       state.errorMsg = "";
     },
+    getStreamingByIdSuccess: (state, { payload }) => {
+      state.currentStreaming = payload;
+      state.loading = false;
+      state.errorMsg = "";
+    },
   },
 });
 
@@ -58,6 +64,7 @@ export const {
   stopStreamingSuccess,
   getLatestStreamingSuccess,
   getAllStreamingSuccess,
+  getStreamingByIdSuccess,
 } = streamingSlice.actions;
 
 export const streamingSelector = (state) => state.streaming;
@@ -154,6 +161,31 @@ export const getAllStreaming = () => {
       dispatch(getAllStreamingSuccess(allStreaming));
     } catch (error) {
       dispatch(setError("Failed to get all streaming"));
+    }
+  };
+};
+
+export const getStreamingById = (streamingId) => {
+  return async (dispatch) => {
+    dispatch(setLoading());
+
+    try {
+      const response = await getStreamingByIdApi(streamingId);
+
+      const { id, name, start_time, end_time, rule_id, rule } = response.data;
+
+      dispatch(
+        getStreamingByIdSuccess({
+          id,
+          name,
+          ruleId: rule_id,
+          rule,
+          startTime: new Date(start_time),
+          endTime: end_time.Valid ? new Date(end_time.Time) : null,
+        })
+      );
+    } catch (error) {
+      dispatch(setError("Failed to get streaming by id"));
     }
   };
 };
