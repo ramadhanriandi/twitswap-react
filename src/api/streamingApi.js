@@ -22,3 +22,9 @@ export const getLatestStreamingApi = async () => {
 
   return data;
 };
+
+export const getAllStreamingApi = async () => {
+  const { data } = await streamRequest.get("/streaming/all");
+
+  return data;
+};

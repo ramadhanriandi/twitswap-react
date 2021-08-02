@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import StreamingInformation from "~/components/commons/StreamingInformation";
+import { getAllStreaming, streamingSelector } from "~/slices/streaming";
 
-import { DUMMY_METADATAS } from "./constants";
 import { PastStreamingWrapper } from "./styles";
 
 const PastStreaming = () => {
+  const dispatch = useDispatch();
+
+  const { allStreaming } = useSelector(streamingSelector);
+
+  useEffect(() => {
+    dispatch(getAllStreaming());
+  }, []);
+
   return (
     <PastStreamingWrapper>
-      {DUMMY_METADATAS.map((data) => (
-        <div className="mb-5" key={data.id}>
-          <StreamingInformation
-            id={data.id}
-            topic={data.topic}
-            startTime={data.start_time}
-            endTime={data.end_time}
-            duration={data.duration}
-            rule={data.rule}
-            isRedirected
-          />
+      {allStreaming.map((streaming) => (
+        <div className="mb-5" key={streaming.id}>
+          <StreamingInformation streaming={streaming} isRedirected />
         </div>
       ))}
     </PastStreamingWrapper>

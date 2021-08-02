@@ -4,12 +4,14 @@ import {
   startStreamingApi,
   stopStreamingApi,
   getLatestStreamingApi,
+  getAllStreamingApi,
 } from "~/api/streamingApi";
 
 const initialState = {
   loading: false,
   errorMsg: "",
   currentStreaming: {},
+  allStreaming: [],
 };
 
 const streamingSlice = createSlice({
@@ -41,6 +43,11 @@ const streamingSlice = createSlice({
       state.loading = false;
       state.errorMsg = "";
     },
+    getAllStreamingSuccess: (state, { payload }) => {
+      state.allStreaming = payload;
+      state.loading = false;
+      state.errorMsg = "";
+    },
   },
 });
 
@@ -50,6 +57,7 @@ export const {
   startStreamingSuccess,
   stopStreamingSuccess,
   getLatestStreamingSuccess,
+  getAllStreamingSuccess,
 } = streamingSlice.actions;
 
 export const streamingSelector = (state) => state.streaming;
@@ -117,6 +125,35 @@ export const getLatestStreaming = () => {
       );
     } catch (error) {
       dispatch(setError("Failed to get latest streaming"));
+    }
+  };
+};
+
+export const getAllStreaming = () => {
+  return async (dispatch) => {
+    dispatch(setLoading());
+
+    try {
+      const response = await getAllStreamingApi();
+
+      const allStreaming = [];
+
+      response.data.forEach((data) => {
+        const { id, name, start_time, end_time, rule_id, rule } = data;
+
+        allStreaming.push({
+          id,
+          name,
+          ruleId: rule_id,
+          rule,
+          startTime: new Date(start_time),
+          endTime: end_time.Valid ? new Date(end_time.Time) : null,
+        });
+      });
+
+      dispatch(getAllStreamingSuccess(allStreaming));
+    } catch (error) {
+      dispatch(setError("Failed to get all streaming"));
     }
   };
 };
