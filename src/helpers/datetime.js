@@ -3,12 +3,12 @@ import { MONTHS } from "~/constants/datetime";
 export const formatDateTime = (dateStr) => {
   const dateTime = dateStr ? new Date(dateStr) : new Date();
 
-  const date = dateTime.getDate();
-  const monthIdx = dateTime.getMonth();
-  const year = dateTime.getFullYear();
+  const date = dateTime.getUTCDate();
+  const monthIdx = dateTime.getUTCMonth();
+  const year = dateTime.getUTCFullYear();
 
-  let hour = dateTime.getHours();
-  const minute = dateTime.getMinutes();
+  let hour = dateTime.getUTCHours();
+  const minute = dateTime.getUTCMinutes();
   const period = hour >= 12 ? "PM" : "AM";
   hour = hour % 12;
   hour = hour || 12;

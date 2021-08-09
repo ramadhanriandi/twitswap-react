@@ -17,11 +17,15 @@ const PastStreaming = () => {
 
   return (
     <PastStreamingWrapper>
-      {allStreaming.map((streaming) => (
-        <div className="mb-5" key={streaming.id}>
-          <StreamingInformation streaming={streaming} isRedirected />
-        </div>
-      ))}
+      {allStreaming.length ? (
+        allStreaming.map((streaming) => (
+          <div className="mb-5" key={streaming.id}>
+            <StreamingInformation streaming={streaming} isRedirected />
+          </div>
+        ))
+      ) : (
+        <>No past streaming found</>
+      )}
     </PastStreamingWrapper>
   );
 };
