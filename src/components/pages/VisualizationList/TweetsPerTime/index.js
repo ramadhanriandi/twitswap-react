@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   LineChart,
   Line,
@@ -10,18 +11,21 @@ import {
 } from "recharts";
 
 import { COLORS } from "~/constants/colors";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_TWEETS_PER_TIME } from "./constants";
+import { convertIntervalTweetTypes } from "./utils";
 
 const TweetsPerTime = () => {
+  const { tweetTypes } = useSelector(streamingSelector);
+
   return (
     <div>
       <VisualizationTemplate title="Tweets per Time">
         <ResponsiveContainer height={308} width="100%">
           <LineChart
-            data={DUMMY_TWEETS_PER_TIME}
+            data={convertIntervalTweetTypes(tweetTypes.interval)}
             margin={{
               top: 0,
               right: 0,

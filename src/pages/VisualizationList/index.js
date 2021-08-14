@@ -17,6 +17,7 @@ import WordCloud from "~/components/pages/VisualizationList/WordCloud";
 import {
   getLatestStreaming,
   getStreamingById,
+  getVisualizationByRuleId,
   streamingSelector,
 } from "~/slices/streaming";
 
@@ -53,6 +54,12 @@ const VisualizationList = () => {
       }
     }
   }, [currentStreaming, location.pathname]);
+
+  useEffect(() => {
+    if (currentStreaming.ruleId) {
+      dispatch(getVisualizationByRuleId(currentStreaming.ruleId));
+    }
+  }, [currentStreaming]);
 
   return (
     <VisualizationListWrapper>

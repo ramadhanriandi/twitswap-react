@@ -20,6 +20,22 @@ export const formatDateTime = (dateStr) => {
   return `${date} ${MONTHS[monthIdx]}, ${year} at ${hourStr}:${minuteStr} ${period}`;
 };
 
+export const formatTime = (timeStr) => {
+  const dateTime = timeStr ? new Date(timeStr) : new Date();
+
+  let hour = dateTime.getUTCHours();
+  const minute = dateTime.getUTCMinutes();
+  const period = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12;
+  hour = hour || 12;
+
+  const hourStr = hour < 10 ? `0${hour}` : hour;
+
+  const minuteStr = minute < 10 ? `0${minute}` : minute;
+
+  return `${hourStr}:${minuteStr} ${period}`;
+};
+
 export const getDuration = (startTimeStr, endTimeStr) => {
   if (!startTimeStr || !endTimeStr) {
     return null;

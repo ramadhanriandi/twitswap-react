@@ -6,13 +6,46 @@ import {
   getLatestStreamingApi,
   getAllStreamingApi,
   getStreamingByIdApi,
+  getVisualizationByRuleIdApi,
 } from "~/api/streamingApi";
+
+const TWEET_LANGUAGES_INITIAL_STATE = {
+  en: 0,
+  in: 0,
+  other: 0,
+};
+const TWEET_METRICS_INITIAL_STATE = {
+  cumulative: {
+    like: 0,
+    reply: 0,
+    retweet: 0,
+    quote: 0,
+  },
+  interval: [],
+};
+const TWEET_TYPES_INITIAL_STATE = {
+  cumulative: {
+    tweet: 0,
+    retweet: 0,
+    quote: 0,
+    reply: 0,
+  },
+  interval: [],
+};
 
 const initialState = {
   loading: false,
   errorMsg: "",
   currentStreaming: {},
   allStreaming: [],
+  tweetAnnotations: [],
+  tweetDomains: [],
+  tweetGeolocations: [],
+  tweetHashtags: [],
+  tweetLanguages: TWEET_LANGUAGES_INITIAL_STATE,
+  tweetMetrics: TWEET_METRICS_INITIAL_STATE,
+  tweetPopularities: [],
+  tweetTypes: TWEET_TYPES_INITIAL_STATE,
 };
 
 const streamingSlice = createSlice({
@@ -54,6 +87,29 @@ const streamingSlice = createSlice({
       state.loading = false;
       state.errorMsg = "";
     },
+    getVisualizationByRuleIdSuccess: (state, { payload }) => {
+      const {
+        tweetAnnotations,
+        tweetDomains,
+        tweetGeolocations,
+        tweetHashtags,
+        tweetLanguages,
+        tweetMetrics,
+        tweetPopularities,
+        tweetTypes,
+      } = payload;
+
+      state.tweetAnnotations = tweetAnnotations;
+      state.tweetDomains = tweetDomains;
+      state.tweetGeolocations = tweetGeolocations;
+      state.tweetHashtags = tweetHashtags;
+      state.tweetLanguages = tweetLanguages;
+      state.tweetMetrics = tweetMetrics;
+      state.tweetPopularities = tweetPopularities;
+      state.tweetTypes = tweetTypes;
+      state.loading = false;
+      state.errorMsg = "";
+    },
   },
 });
 
@@ -65,6 +121,7 @@ export const {
   getLatestStreamingSuccess,
   getAllStreamingSuccess,
   getStreamingByIdSuccess,
+  getVisualizationByRuleIdSuccess,
 } = streamingSlice.actions;
 
 export const streamingSelector = (state) => state.streaming;
@@ -186,6 +243,45 @@ export const getStreamingById = (streamingId) => {
       );
     } catch (error) {
       dispatch(setError("Failed to get streaming by id"));
+    }
+  };
+};
+
+export const getVisualizationByRuleId = (ruleId, latestTime) => {
+  return async (dispatch) => {
+    dispatch(setLoading());
+
+    try {
+      const response = await getVisualizationByRuleIdApi(ruleId, latestTime);
+
+      const {
+        tweet_annotations,
+        tweet_domains,
+        tweet_geolocations,
+        tweet_hashtags,
+        tweet_languages,
+        tweet_metrics,
+        tweet_popularities,
+        tweet_types,
+      } = response.data;
+
+      tweet_metrics.interval.reverse();
+      tweet_types.interval.reverse();
+
+      dispatch(
+        getVisualizationByRuleIdSuccess({
+          tweetAnnotations: tweet_annotations ?? [],
+          tweetDomains: tweet_domains ?? [],
+          tweetGeolocations: tweet_geolocations ?? [],
+          tweetHashtags: tweet_hashtags ?? [],
+          tweetLanguages: tweet_languages,
+          tweetMetrics: tweet_metrics,
+          tweetPopularities: tweet_popularities ?? [],
+          tweetTypes: tweet_types,
+        })
+      );
+    } catch (error) {
+      dispatch(setError("Failed to get visualization by rule id"));
     }
   };
 };

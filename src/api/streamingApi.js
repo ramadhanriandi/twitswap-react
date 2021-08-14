@@ -34,3 +34,13 @@ export const getStreamingByIdApi = async (id) => {
 
   return data;
 };
+
+export const getVisualizationByRuleIdApi = async (ruleId, latestTime) => {
+  const { data } = await streamRequest.get(`/rule/${ruleId}/visualization`, {
+    params: {
+      latest_time: latestTime,
+    },
+  });
+
+  return data;
+};
