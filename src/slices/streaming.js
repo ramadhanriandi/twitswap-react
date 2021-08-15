@@ -265,8 +265,8 @@ export const getVisualizationByRuleId = (ruleId, latestTime) => {
         tweet_types,
       } = response.data;
 
-      tweet_metrics.interval.reverse();
-      tweet_types.interval.reverse();
+      tweet_metrics?.interval.reverse();
+      tweet_types?.interval.reverse();
 
       dispatch(
         getVisualizationByRuleIdSuccess({

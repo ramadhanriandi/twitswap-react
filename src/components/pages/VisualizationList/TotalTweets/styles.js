@@ -46,22 +46,22 @@ export const StyledTotalTweets = styled.div`
 
     &__tweet {
       background: ${COLORS.RED_1};
-      width: 50%;
+      width: ${(props) => (props.tweetCount / props.totalTweets) * 100}%;
     }
 
     &__retweet {
       background: ${COLORS.YELLOW_1};
-      width: 25%;
+      width: ${(props) => (props.retweetCount / props.totalTweets) * 100}%;
     }
 
     &__quote {
       background: ${COLORS.GREEN_1};
-      width: 20%;
+      width: ${(props) => (props.quoteCount / props.totalTweets) * 100}%;
     }
 
     &__reply {
       background: ${COLORS.GREY_1};
-      width: 5%;
+      width: ${(props) => (props.replyCount / props.totalTweets) * 100}%;
     }
   }
 `;

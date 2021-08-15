@@ -1,29 +1,48 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { Tooltip } from "@material-ui/core";
 
 import Box from "~/components/commons/Box";
 import { getNumberWithCommas } from "~/helpers/number";
+import { streamingSelector } from "~/slices/streaming";
 
 import { StyledTotalTweets } from "./styles";
+import { getCumulativeTweetTypes } from "./utils";
 
 const TotalTweets = () => {
+  const { tweetTypes } = useSelector(streamingSelector);
+
+  const totalTweets = getCumulativeTweetTypes(tweetTypes?.cumulative);
+  const tweetCount = tweetTypes?.cumulative?.tweet ?? 0;
+  const retweetCount = tweetTypes?.cumulative?.retweet ?? 0;
+  const quoteCount = tweetTypes?.cumulative?.quote ?? 0;
+  const replyCount = tweetTypes?.cumulative?.reply ?? 0;
+
   return (
-    <StyledTotalTweets>
+    <StyledTotalTweets
+      totalTweets={totalTweets}
+      tweetCount={tweetCount}
+      retweetCount={retweetCount}
+      quoteCount={quoteCount}
+      replyCount={replyCount}
+    >
       <Box className="h-full">
         <div>Total Tweets</div>
-        <div className="total-tweets__count">{getNumberWithCommas(1023)}</div>
+        <div className="total-tweets__count">
+          {getNumberWithCommas(totalTweets)}
+        </div>
         <div className="flex mb-5">
-          <Tooltip title={getNumberWithCommas(500)} arrow>
+          <Tooltip title={getNumberWithCommas(tweetCount)} arrow>
             <div className="total-tweets__tweet h-2" />
           </Tooltip>
-          <Tooltip title={getNumberWithCommas(250)} arrow>
+          <Tooltip title={getNumberWithCommas(retweetCount)} arrow>
             <div className="total-tweets__retweet h-2" />
           </Tooltip>
-          <Tooltip title={getNumberWithCommas(200)} arrow>
+          <Tooltip title={getNumberWithCommas(quoteCount)} arrow>
             <div className="total-tweets__quote h-2" />
           </Tooltip>
-          <Tooltip title={getNumberWithCommas(73)} arrow>
+          <Tooltip title={getNumberWithCommas(replyCount)} arrow>
             <div className="total-tweets__reply h-2" />
           </Tooltip>
         </div>

@@ -25,7 +25,7 @@ const TweetsPerTime = () => {
       <VisualizationTemplate title="Tweets per Time">
         <ResponsiveContainer height={308} width="100%">
           <LineChart
-            data={convertIntervalTweetTypes(tweetTypes.interval)}
+            data={convertIntervalTweetTypes(tweetTypes?.interval)}
             margin={{
               top: 0,
               right: 0,
