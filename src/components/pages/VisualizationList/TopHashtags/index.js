@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Bar,
   BarChart,
@@ -10,18 +11,19 @@ import {
 } from "recharts";
 
 import { COLORS } from "~/constants/colors";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_TOP_HASHTAGS } from "./constants";
-
 const TopHashtags = () => {
+  const { tweetHashtags } = useSelector(streamingSelector);
+
   return (
     <div>
       <VisualizationTemplate title="Top Hashtags">
         <ResponsiveContainer height={308} width="100%">
           <BarChart
-            data={DUMMY_TOP_HASHTAGS}
+            data={tweetHashtags}
             margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
