@@ -14,19 +14,20 @@ import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_ENGAGEMENT_RATE_DATA } from "./constants";
 import { StyledEngagementRate } from "./styles";
 import { convertIntervalTweetMetrics } from "./utils";
 
 const EngagementRate = () => {
   const { tweetMetrics } = useSelector(streamingSelector);
 
+  const data = convertIntervalTweetMetrics(tweetMetrics?.interval);
+
   return (
     <StyledEngagementRate>
       <VisualizationTemplate title="Engagement Rate">
         <ResponsiveContainer height={246} width="100%">
           <AreaChart
-            data={convertIntervalTweetMetrics(tweetMetrics?.interval)}
+            data={data}
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
@@ -44,9 +45,7 @@ const EngagementRate = () => {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip
-              labelFormatter={(index) => DUMMY_ENGAGEMENT_RATE_DATA[index].name}
-            />
+            <Tooltip labelFormatter={(index) => data[index]?.name} />
             <Area
               type="monotone"
               dataKey="total"

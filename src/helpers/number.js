@@ -1,3 +1,8 @@
 export const getNumberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const convertedNum =
+    x > 99999
+      ? Math.sign(x) * (Math.abs(x) / 1000).toFixed(1) + "k"
+      : Math.sign(x) * Math.abs(x);
+
+  return convertedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
