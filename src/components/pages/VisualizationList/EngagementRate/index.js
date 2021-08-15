@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Area,
   AreaChart,
@@ -9,19 +10,23 @@ import {
 
 import { COLORS } from "~/constants/colors";
 import { getNumberWithCommas } from "~/helpers/number";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
 import { DUMMY_ENGAGEMENT_RATE_DATA } from "./constants";
 import { StyledEngagementRate } from "./styles";
+import { convertIntervalTweetMetrics } from "./utils";
 
 const EngagementRate = () => {
+  const { tweetMetrics } = useSelector(streamingSelector);
+
   return (
     <StyledEngagementRate>
       <VisualizationTemplate title="Engagement Rate">
         <ResponsiveContainer height={246} width="100%">
           <AreaChart
-            data={DUMMY_ENGAGEMENT_RATE_DATA}
+            data={convertIntervalTweetMetrics(tweetMetrics?.interval)}
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
             <defs>
@@ -56,25 +61,25 @@ const EngagementRate = () => {
           <div>
             <div className="engagement-rate__title">Total Likes</div>
             <div className="engagement-rate__count">
-              {getNumberWithCommas(1043)}
+              {getNumberWithCommas(tweetMetrics?.cumulative?.like ?? 0)}
             </div>
           </div>
           <div>
             <div className="engagement-rate__title">Total Replies</div>
             <div className="engagement-rate__count">
-              {getNumberWithCommas(350)}
+              {getNumberWithCommas(tweetMetrics?.cumulative?.reply ?? 0)}
             </div>
           </div>
           <div>
             <div className="engagement-rate__title">Total Retweets</div>
             <div className="engagement-rate__count">
-              {getNumberWithCommas(93)}
+              {getNumberWithCommas(tweetMetrics?.cumulative?.retweet ?? 0)}
             </div>
           </div>
           <div>
             <div className="engagement-rate__title">Total Quotes</div>
             <div className="engagement-rate__count">
-              {getNumberWithCommas(56)}
+              {getNumberWithCommas(tweetMetrics?.cumulative?.quote ?? 0)}
             </div>
           </div>
         </div>
