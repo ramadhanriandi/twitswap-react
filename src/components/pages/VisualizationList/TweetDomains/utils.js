@@ -1,17 +1,8 @@
 export const convertTweetDomains = (tweetDomains) => {
   const convertedTweetDomains = {
     name: "tweet_domains",
-    children: [],
+    children: tweetDomains,
   };
-
-  tweetDomains.forEach((tweetDomain) => {
-    const { name, count } = tweetDomain;
-
-    convertedTweetDomains.children.push({
-      name,
-      tweets: count,
-    });
-  });
 
   return [convertedTweetDomains];
 };

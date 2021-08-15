@@ -19,7 +19,7 @@ const TweetDomains = () => {
           <Treemap
             data={convertTweetDomains(tweetDomains)}
             nameKey="name"
-            dataKey="tweets"
+            dataKey="count"
             stroke={COLORS.WHITE}
             fill={COLORS.PRIMARY_1}
           >

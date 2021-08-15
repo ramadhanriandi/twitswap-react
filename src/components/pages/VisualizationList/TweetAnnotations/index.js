@@ -1,25 +1,27 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { ResponsiveBubbleHtml } from "@nivo/circle-packing";
 
 import { COLORS } from "~/constants/colors";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_TWEET_ANNOTATIONS } from "./constants";
+import { convertTweetAnnotations } from "./utils";
 
 const TweetAnnotations = () => {
+  const { tweetAnnotations } = useSelector(streamingSelector);
+
   return (
     <div>
       <VisualizationTemplate title="Tweet Annotations">
         <ResponsiveBubbleHtml
-          root={DUMMY_TWEET_ANNOTATIONS}
+          root={convertTweetAnnotations(tweetAnnotations)}
           identity="name"
-          value="value"
+          value="count"
           colors={COLORS.PRIMARY_1}
-          colorBy="value"
-          leavesOnly={true}
-          enableLabel={true}
+          colorBy="count"
           label="id"
           labelSkipRadius={24}
           labelTextColor={COLORS.WHITE}
