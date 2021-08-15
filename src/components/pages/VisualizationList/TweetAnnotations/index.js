@@ -25,7 +25,6 @@ const TweetAnnotations = () => {
           label="id"
           labelSkipRadius={24}
           labelTextColor={COLORS.WHITE}
-          leavesOnly
           borderWidth={2}
           borderColor={COLORS.WHITE}
           tooltip={({ id, value, color }) => (

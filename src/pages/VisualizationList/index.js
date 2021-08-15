@@ -57,9 +57,13 @@ const VisualizationList = () => {
 
   useEffect(() => {
     if (currentStreaming.ruleId) {
-      setInterval(() => {
+      let intervalCall = setInterval(() => {
         dispatch(getVisualizationByRuleId(currentStreaming.ruleId));
       }, 10000);
+
+      return () => {
+        clearInterval(intervalCall);
+      };
     }
   }, [currentStreaming]);
 

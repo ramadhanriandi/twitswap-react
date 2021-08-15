@@ -74,6 +74,15 @@ const streamingSlice = createSlice({
     },
     getLatestStreamingSuccess: (state, { payload }) => {
       state.currentStreaming = payload;
+      state.allStreaming = [];
+      state.tweetAnnotations = [];
+      state.tweetDomains = [];
+      state.tweetGeolocations = [];
+      state.tweetHashtags = [];
+      state.tweetLanguages = TWEET_LANGUAGES_INITIAL_STATE;
+      state.tweetMetrics = TWEET_METRICS_INITIAL_STATE;
+      state.tweetPopularities = [];
+      state.tweetTypes = TWEET_TYPES_INITIAL_STATE;
       state.loading = false;
       state.errorMsg = "";
     },
@@ -84,6 +93,15 @@ const streamingSlice = createSlice({
     },
     getStreamingByIdSuccess: (state, { payload }) => {
       state.currentStreaming = payload;
+      state.allStreaming = [];
+      state.tweetAnnotations = [];
+      state.tweetDomains = [];
+      state.tweetGeolocations = [];
+      state.tweetHashtags = [];
+      state.tweetLanguages = TWEET_LANGUAGES_INITIAL_STATE;
+      state.tweetMetrics = TWEET_METRICS_INITIAL_STATE;
+      state.tweetPopularities = [];
+      state.tweetTypes = TWEET_TYPES_INITIAL_STATE;
       state.loading = false;
       state.errorMsg = "";
     },

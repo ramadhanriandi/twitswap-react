@@ -1,6 +1,6 @@
 export const convertTweetAnnotations = (tweetAnnotations) => {
   const convertedTweetAnnotations = {
-    name: "root",
+    name: "Tweet Annotations",
     children: tweetAnnotations,
   };
 
