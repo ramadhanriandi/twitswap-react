@@ -1,19 +1,23 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Tooltip, Treemap, ResponsiveContainer } from "recharts";
 
 import { COLORS } from "~/constants/colors";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_TWEET_DOMAINS } from "./constants";
+import { convertTweetDomains } from "./utils";
 
 const TweetDomains = () => {
+  const { tweetDomains } = useSelector(streamingSelector);
+
   return (
     <div>
       <VisualizationTemplate title="Tweet Domains">
         <ResponsiveContainer height={308} width="100%">
           <Treemap
-            data={DUMMY_TWEET_DOMAINS}
+            data={convertTweetDomains(tweetDomains)}
             nameKey="name"
             dataKey="tweets"
             stroke={COLORS.WHITE}
