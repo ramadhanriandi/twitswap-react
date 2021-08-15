@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   ComposableMap,
   ZoomableGroup,
@@ -8,13 +9,16 @@ import {
 } from "react-simple-maps";
 
 import { COLORS } from "~/constants/colors";
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_TWEET_GEOLOCATIONS, GEO_URL } from "./constants";
+import { GEO_URL } from "./constants";
 import { StyledTweetGeolocations } from "./styles";
 
 const TweetGeolocations = () => {
+  const { tweetGeolocations } = useSelector(streamingSelector);
+
   return (
     <StyledTweetGeolocations>
       <VisualizationTemplate title="Tweet Geolocations">
@@ -32,10 +36,10 @@ const TweetGeolocations = () => {
                 ))
               }
             </Geographies>
-            {DUMMY_TWEET_GEOLOCATIONS.map((coordinates, index) => (
+            {tweetGeolocations.map((coordinates, index) => (
               <Marker
                 key={`tweet-geolocation-${index}`}
-                coordinates={coordinates}
+                coordinates={[coordinates.lat, coordinates.long]}
               >
                 <circle
                   r={10}

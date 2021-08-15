@@ -15,20 +15,22 @@ const Languages = () => {
   const data = convertTweetLanguages(tweetLanguages);
 
   return (
-    <VisualizationTemplate title="Languages">
-      <ResponsiveWaffle
-        data={data}
-        total={getTotalData(data)}
-        rows={10}
-        columns={10}
-        colors={(data) => data.color}
-        borderColor={{ from: "color", gamma: [["darker", 0.3]] }}
-        animate
-        motionStiffness={90}
-        motionDamping={11}
-        fillDirection="top"
-      />
-    </VisualizationTemplate>
+    <div>
+      <VisualizationTemplate title="Languages">
+        <ResponsiveWaffle
+          data={data}
+          total={getTotalData(data)}
+          rows={10}
+          columns={10}
+          colors={(data) => data.color}
+          borderColor={{ from: "color", gamma: [["darker", 0.3]] }}
+          animate
+          motionStiffness={90}
+          motionDamping={11}
+          fillDirection="top"
+        />
+      </VisualizationTemplate>
+    </div>
   );
 };
 
