@@ -16,8 +16,8 @@ const WordCloud = () => {
     <StyledWordCloud>
       <VisualizationTemplate title="Word Cloud">
         <TagCloud
-          minSize={12}
-          maxSize={36}
+          minSize={8}
+          maxSize={24}
           tags={convertTweetWords(tweetWords)}
           randomNumberGenerator={getRandomNumber}
           disableRandomColor

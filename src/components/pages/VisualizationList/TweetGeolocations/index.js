@@ -39,7 +39,7 @@ const TweetGeolocations = () => {
             {tweetGeolocations.map((coordinates, index) => (
               <Marker
                 key={`tweet-geolocation-${index}`}
-                coordinates={[coordinates.lat, coordinates.long]}
+                coordinates={[coordinates.long, coordinates.lat]}
               >
                 <circle
                   r={10}
