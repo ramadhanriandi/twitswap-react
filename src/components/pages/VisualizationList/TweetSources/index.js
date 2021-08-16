@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   Legend,
   PieChart,
@@ -8,23 +9,30 @@ import {
   Tooltip,
 } from "recharts";
 
+import { streamingSelector } from "~/slices/streaming";
+
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_SENTIMENT_DATA, SENTIMENT_COLORS } from "./constants";
+import { SENTIMENT_COLORS } from "./constants";
+import { convertTweetSources } from "./utils";
 
-const Sentiment = () => {
+const TweetSources = () => {
+  const { tweetSources } = useSelector(streamingSelector);
+
+  const convertedTweetSources = convertTweetSources(tweetSources);
+
   return (
     <div>
-      <VisualizationTemplate title="Sentiment">
+      <VisualizationTemplate title="Sources">
         <ResponsiveContainer height={308} width="100%">
           <PieChart>
             <Pie
-              data={DUMMY_SENTIMENT_DATA}
+              data={convertedTweetSources}
               innerRadius={80}
               paddingAngle={1}
               dataKey="value"
             >
-              {DUMMY_SENTIMENT_DATA.map((entry) => (
+              {convertedTweetSources.map((entry) => (
                 <Cell
                   key={`cell-${entry.name}`}
                   fill={SENTIMENT_COLORS[entry.name]}
@@ -40,4 +48,4 @@ const Sentiment = () => {
   );
 };
 
-export default Sentiment;
+export default TweetSources;
