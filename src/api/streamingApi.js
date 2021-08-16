@@ -1,3 +1,5 @@
+import { formatDateTimeRequest } from "~/helpers/datetime";
+
 import { streamRequest } from "./axiosConfig";
 
 export const startStreamingApi = async (name, rule) => {
@@ -36,9 +38,13 @@ export const getStreamingByIdApi = async (id) => {
 };
 
 export const getVisualizationByRuleIdApi = async (ruleId, latestTime) => {
+  const convertedLatestTime = latestTime
+    ? formatDateTimeRequest(latestTime)
+    : undefined;
+
   const { data } = await streamRequest.get(`/rule/${ruleId}/visualization`, {
     params: {
-      latest_time: latestTime,
+      latest_time: convertedLatestTime,
     },
   });
 

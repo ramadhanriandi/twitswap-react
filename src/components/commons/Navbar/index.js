@@ -8,7 +8,11 @@ import { CircularProgress } from "@material-ui/core";
 import { AddCircleOutline, History } from "@material-ui/icons";
 
 import Button from "~/components/commons/Button";
-import { stopStreaming, streamingSelector } from "~/slices/streaming";
+import {
+  getVisualizationByRuleId,
+  stopStreaming,
+  streamingSelector,
+} from "~/slices/streaming";
 
 import { StyledNavbar } from "./styles";
 
@@ -30,8 +34,17 @@ const Navbar = () => {
     setActiveMenu(locationPathname);
   }, [location.pathname]);
 
-  const handleChangeDateTime = (dateTime) => {
-    setDateTime(dateTime);
+  const handleChangeDateTime = (newDateTime) => {
+    const parsedPathname = activeMenu.split("/");
+
+    if (currentStreaming.ruleId) {
+      if (parsedPathname[0] === "past") {
+        dispatch(
+          getVisualizationByRuleId(currentStreaming.ruleId, newDateTime)
+        );
+      }
+    }
+    setDateTime(newDateTime);
   };
 
   const handleRedirect = (link) => (e) => {
@@ -85,7 +98,6 @@ const Navbar = () => {
               }}
               showTimeSelect
             />
-            <Button>Find</Button>
           </div>
           <Button onClick={handleRedirect("/past")}>Close</Button>
         </div>

@@ -57,15 +57,21 @@ const VisualizationList = () => {
 
   useEffect(() => {
     if (currentStreaming.ruleId) {
-      let intervalCall = setInterval(() => {
-        dispatch(getVisualizationByRuleId(currentStreaming.ruleId));
-      }, 10000);
+      const locationPathname = location.pathname.slice(1);
 
-      return () => {
-        clearInterval(intervalCall);
-      };
+      if (locationPathname === "streaming") {
+        let intervalCall = setInterval(() => {
+          dispatch(getVisualizationByRuleId(currentStreaming.ruleId));
+        }, 10000);
+
+        return () => {
+          clearInterval(intervalCall);
+        };
+      } else {
+        dispatch(getVisualizationByRuleId(currentStreaming.ruleId));
+      }
     }
-  }, [currentStreaming]);
+  }, [currentStreaming, location.pathname]);
 
   return (
     <VisualizationListWrapper>

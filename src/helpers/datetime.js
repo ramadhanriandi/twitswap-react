@@ -20,6 +20,24 @@ export const formatDateTime = (dateStr) => {
   return `${date} ${MONTHS[monthIdx]}, ${year} at ${hourStr}:${minuteStr} ${period}`;
 };
 
+export const formatDateTimeRequest = (dateTime) => {
+  let date = dateTime.getDate();
+  date = date < 10 ? `0${date}` : date;
+
+  let month = dateTime.getMonth() + 1;
+  month = month < 10 ? `0${month}` : month;
+
+  const year = dateTime.getFullYear();
+
+  let hour = dateTime.getHours();
+  hour = hour < 10 ? `0${hour}` : hour;
+
+  let minute = dateTime.getMinutes();
+  minute = minute < 10 ? `0${minute}` : minute;
+
+  return `${year}-${month}-${date}T${hour}:${minute}:00`;
+};
+
 export const formatTime = (timeStr) => {
   const dateTime = timeStr ? new Date(timeStr) : new Date();
 

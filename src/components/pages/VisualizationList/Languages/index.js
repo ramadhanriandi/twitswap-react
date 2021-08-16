@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { ResponsiveWaffle } from "@nivo/waffle";
+import { ResponsiveWaffleCanvas } from "@nivo/waffle";
 
 import { streamingSelector } from "~/slices/streaming";
 
@@ -17,7 +17,7 @@ const Languages = () => {
   return (
     <div>
       <VisualizationTemplate title="Languages">
-        <ResponsiveWaffle
+        <ResponsiveWaffleCanvas
           data={data}
           total={getTotalData(data)}
           rows={10}
