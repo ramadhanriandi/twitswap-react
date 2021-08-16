@@ -1,21 +1,24 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { TagCloud } from "react-tagcloud";
+
+import { streamingSelector } from "~/slices/streaming";
 
 import VisualizationTemplate from "../VisualizationTemplate";
 
-import { DUMMY_WORD_CLOUD_DATA } from "./constants";
 import { StyledWordCloud } from "./styles";
-import { getRandomNumber } from "./utils";
+import { convertTweetWords, getRandomNumber } from "./utils";
 
 const WordCloud = () => {
+  const { tweetWords } = useSelector(streamingSelector);
+
   return (
     <StyledWordCloud>
       <VisualizationTemplate title="Word Cloud">
         <TagCloud
           minSize={12}
           maxSize={36}
-          tags={DUMMY_WORD_CLOUD_DATA}
+          tags={convertTweetWords(tweetWords)}
           randomNumberGenerator={getRandomNumber}
           disableRandomColor
         />

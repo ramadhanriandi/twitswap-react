@@ -23,6 +23,12 @@ const TWEET_METRICS_INITIAL_STATE = {
   },
   interval: [],
 };
+const TWEET_SOURCES_INITIAL_STATE = {
+  web: 0,
+  iphone: 0,
+  android: 0,
+  other: 0,
+};
 const TWEET_TYPES_INITIAL_STATE = {
   cumulative: {
     tweet: 0,
@@ -45,7 +51,9 @@ const initialState = {
   tweetLanguages: TWEET_LANGUAGES_INITIAL_STATE,
   tweetMetrics: TWEET_METRICS_INITIAL_STATE,
   tweetPopularities: [],
+  tweetSources: TWEET_SOURCES_INITIAL_STATE,
   tweetTypes: TWEET_TYPES_INITIAL_STATE,
+  tweetWords: [],
 };
 
 const streamingSlice = createSlice({
@@ -82,7 +90,9 @@ const streamingSlice = createSlice({
       state.tweetLanguages = TWEET_LANGUAGES_INITIAL_STATE;
       state.tweetMetrics = TWEET_METRICS_INITIAL_STATE;
       state.tweetPopularities = [];
+      state.tweetSources = TWEET_SOURCES_INITIAL_STATE;
       state.tweetTypes = TWEET_TYPES_INITIAL_STATE;
+      state.tweetWords = [];
       state.loading = false;
       state.errorMsg = "";
     },
@@ -101,7 +111,9 @@ const streamingSlice = createSlice({
       state.tweetLanguages = TWEET_LANGUAGES_INITIAL_STATE;
       state.tweetMetrics = TWEET_METRICS_INITIAL_STATE;
       state.tweetPopularities = [];
+      state.tweetSources = TWEET_SOURCES_INITIAL_STATE;
       state.tweetTypes = TWEET_TYPES_INITIAL_STATE;
+      state.tweetWords = [];
       state.loading = false;
       state.errorMsg = "";
     },
@@ -114,7 +126,9 @@ const streamingSlice = createSlice({
         tweetLanguages,
         tweetMetrics,
         tweetPopularities,
+        tweetSources,
         tweetTypes,
+        tweetWords,
       } = payload;
 
       state.tweetAnnotations = tweetAnnotations;
@@ -124,7 +138,9 @@ const streamingSlice = createSlice({
       state.tweetLanguages = tweetLanguages;
       state.tweetMetrics = tweetMetrics;
       state.tweetPopularities = tweetPopularities;
+      state.tweetSources = tweetSources;
       state.tweetTypes = tweetTypes;
+      state.tweetWords = tweetWords;
       state.loading = false;
       state.errorMsg = "";
     },
@@ -280,7 +296,9 @@ export const getVisualizationByRuleId = (ruleId, latestTime) => {
         tweet_languages,
         tweet_metrics,
         tweet_popularities,
+        tweet_sources,
         tweet_types,
+        tweet_words,
       } = response.data;
 
       tweet_metrics?.interval?.reverse();
@@ -295,7 +313,9 @@ export const getVisualizationByRuleId = (ruleId, latestTime) => {
           tweetLanguages: tweet_languages,
           tweetMetrics: tweet_metrics,
           tweetPopularities: tweet_popularities ?? [],
+          tweetSources: tweet_sources,
           tweetTypes: tweet_types,
+          tweetWords: tweet_words ?? [],
         })
       );
     } catch (error) {
